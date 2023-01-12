@@ -1,4 +1,34 @@
-## A project for applying for staff on discord and reviewing/denying/accepting online.
+# DiscordStaffPortal
+
+This is a Next.JS application that allows users to apply for staff positions on a Discord server and for current staff members to review, deny, and accept applications through an online portal.
+
+## Technologies used
+
+- Next.JS
+- Prisma
+- Discord API
+
+## Getting Started
+
+To run this project locally, you will need to have Node.js and npm installed on your machine. You will also need to set up a Discord bot and create a .env file with your Discord bot token and the guild id of your Discord server.
+
+1. Clone the repository
+2. Install the dependencies
+3. Start the development server
+4. Run prisma (npx prisma studio)
+5. Open http://localhost:3000 to view the application in the browser.
+
+## Deployment
+
+This project is designed to be deployed on a Node.js environment. You can use a service like Heroku or Vercel to deploy the application.
+
+## Contributing
+
+If you wish to contribute to the development of this project, please open a pull request.
+
+## License
+
+This project is licensed under the MIT License.
 
 
 # Prisma CLI Reference
