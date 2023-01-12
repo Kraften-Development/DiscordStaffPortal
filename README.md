@@ -1,3 +1,5 @@
+# A project for applying for staff on discord and reviewing/denying/accepting online.
+
 
 # Prisma CLI Reference
 https://www.prisma.io/docs/reference/api-reference/command-reference
