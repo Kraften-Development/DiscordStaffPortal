@@ -2,6 +2,16 @@
 
 This is a Next.JS application that allows users to apply for staff positions on a Discord server and for current staff members to review, deny, and accept applications through an online portal.
 
+## About DiscordStaffPortal
+
+DiscordStaffPortal is a comprehensive solution for managing staff applications on Discord servers. It provides a user-friendly interface for users to apply for staff positions, and a convenient way for current staff members to review, deny, and accept applications.
+
+Built with Next.JS, Prisma, and the Discord API, DiscordStaffPortal offers a robust and reliable platform for managing staff applications. The application is designed to be deployed on a Node.js environment, making it easy to integrate into your existing Discord server.
+
+With DiscordStaffPortal, you can streamline your staff application process, reduce administrative workload, and improve communication between staff members and applicants. Whether you're a small community or a large organization, DiscordStaffPortal is the perfect solution for managing your staff applications.
+
+Join us on this journey of building a complete solution for managing staff applications and improve the overall experience for users and staff members.
+
 ## Technologies used
 
 - Next.JS
