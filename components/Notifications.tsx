@@ -8,6 +8,7 @@ import Badge, { BadgeProps } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import MailIcon from '@mui/icons-material/Mail';
+import ConsecutiveSnackbars, { SnackbarHandle } from './Snackbar';
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -22,9 +23,16 @@ interface Props {
     notifications: Notifications[]
 }
 
+
 export default function NotificationList(props: Props) {
     const [notificationList, setNotifications] = React.useState(props.notifications);
+    const ref = React.useRef<SnackbarHandle>(null);
 
+    const showSnackbar = (message: string) => {
+        if (ref.current) {
+            ref.current.handle(message);
+        }
+    }
     return (
         <div
             className="flex flex-col max-h-[600px]"
@@ -40,9 +48,10 @@ export default function NotificationList(props: Props) {
             <Typography variant="subtitle1">Her kan du se alle dine notifikationer</Typography>
             <Paper className="space-y-4" style={{ width: '100%', maxHeight: '800px', overflowY: 'scroll', padding: '20px' }}>
                 {notificationList.map(notification => (
-                    <Notification setNotifications={setNotifications} key={notification.id} {...notification} />
+                    <Notification showSnackbar={showSnackbar} setNotifications={setNotifications} key={notification.id} {...notification} />
                 ))}
             </Paper>
+            <ConsecutiveSnackbars ref={ref} />
         </div>
     );
 }

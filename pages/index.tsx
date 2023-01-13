@@ -1,10 +1,12 @@
-import { Avatar, Typography } from "@mui/material";
+import { LockClosedIcon } from "@heroicons/react/24/solid";
+import { Avatar, Button, IconButton, Snackbar, Typography } from "@mui/material";
 import { Notifications } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { Session, unstable_getServerSession } from "next-auth";
 import { useSession, signIn, signOut, getSession } from "next-auth/react"
 import Faq from "../components/Faq";
 import NotificationList from "../components/Notifications";
+import ConsecutiveSnackbars from "../components/Snackbar";
 import prisma from "../lib/prisma";
 import { authOptions } from './api/auth/[...nextauth].js'
 
@@ -27,7 +29,6 @@ export default function Home({ notifications }: NotificationProps) {
           <Faq />
           <NotificationList notifications={notifications} />
         </div>
-
       </div>
     );
   }
