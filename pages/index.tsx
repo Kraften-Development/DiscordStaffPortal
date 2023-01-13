@@ -6,7 +6,6 @@ import { Session, unstable_getServerSession } from "next-auth";
 import { useSession, signIn, signOut, getSession } from "next-auth/react"
 import Faq from "../components/Faq";
 import NotificationList from "../components/Notifications";
-import ConsecutiveSnackbars from "../components/Snackbar";
 import prisma from "../lib/prisma";
 import { authOptions } from './api/auth/[...nextauth].js'
 

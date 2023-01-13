@@ -1,95 +1,57 @@
-import * as React from 'react';
+import { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import Alert, { AlertColor } from '@mui/material/Alert';
 
-export interface SnackbarMessage {
-    message: string;
-    key: number;
-}
 
-export interface State {
-    open: boolean;
-    snackPack: readonly SnackbarMessage[];
-    messageInfo?: SnackbarMessage;
-}
-
-export type SnackbarHandle = {
-    handle: (msg: string) => void;
+interface SnackbarContextType {
+    showMessage: (message: string, severity?: string, duration?: number) => void;
+    handleClose: (event?: React.SyntheticEvent | Event, reason?: string) => void;
 };
 
-type SnackbarProps = {};
+const SnackbarContext = createContext<SnackbarContextType | null>(null);
 
-const ConsecutiveSnackbars = React.forwardRef<SnackbarHandle, SnackbarProps>((props, ref) => {
-    const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>([]);
-    const [open, setOpen] = React.useState(false);
-    const [messageInfo, setMessageInfo] = React.useState<SnackbarMessage | undefined>(
-        undefined,
-    );
+export const useSnackbar = () => {
+    const context = useContext(SnackbarContext)
+    return {
+        showMessage: context?.showMessage,
+        handleClose: context?.handleClose
+    }
+};
 
-    React.useImperativeHandle(ref, () => {
-        return {
-            handle(message: string) {
-                handleClick(message);
-            }
-        }
-    });
+export const SnackbarProvider = ({ children }: any) => {
+    const [open, setOpen] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>("I'm a custom snackbar");
+    const [duration, setDuration] = useState<number>(2000);
+    const [severity, setSeverity] = useState<string>(
+        "success"
+    ); /** error | warning | info */
 
-    React.useEffect(() => {
-        if (snackPack.length && !messageInfo) {
-            // Set a new snack when we don't have an active one
-            setMessageInfo({ ...snackPack[0] });
-            setSnackPack((prev) => prev.slice(1));
-            setOpen(true);
-        } else if (snackPack.length && messageInfo && open) {
-            // Close an active snack when a new one is added
-            setOpen(false);
-        }
-    }, [snackPack, messageInfo, open]);
-
-    const handleClick = (message: string) => {
-        setSnackPack((prev) => [...prev, { message, key: new Date().getTime() }]);
+    const showMessage = (message: string, severity = "success", duration = 2000) => {
+        setMessage(message);
+        setSeverity(severity);
+        setDuration(duration);
+        setOpen(true);
     };
 
-    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         setOpen(false);
     };
 
-    const handleExited = () => {
-        setMessageInfo(undefined);
-    };
+    return <SnackbarContext.Provider value={{
+        showMessage,
+        handleClose
+    }}>
+        {children}
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} >
+            <Alert onClose={handleClose} severity={severity as AlertColor} sx={{ width: '100%' }}>
+                {message}
+            </Alert>
+        </Snackbar >
+    </SnackbarContext.Provider>
 
-    return (
-        <div>
-            <Snackbar
-                key={messageInfo ? messageInfo.key : undefined}
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                TransitionProps={{ onExited: handleExited }}
-                message={messageInfo ? messageInfo.message : undefined}
-                action={
-                    <React.Fragment>
-                        {/*<Button color="secondary" size="small" onClick={handleClose}>
-                            UNDO
-                         </Button> */}
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            sx={{ p: 0.5 }}
-                            onClick={handleClose}
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                    </React.Fragment>
-                }
-            />
-        </div>
-    );
-})
-
-export default ConsecutiveSnackbars;
+}

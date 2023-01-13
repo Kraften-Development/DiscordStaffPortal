@@ -2,7 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../lib/prisma'
 
 type Data = {
-    message: string
+    message: string;
+    severity: string;
 }
 
 export default async function handle(
@@ -15,8 +16,9 @@ export default async function handle(
         },
     }).catch((_) => {
         return res.status(400).json({
-            message: 'Notifikationen blev ikke slettet korrekt, prøv igen.. (Eller reload siden)'
+            message: 'Notifikationen blev ikke slettet korrekt, prøv igen.. (Eller reload siden)',
+            severity: 'warning',
         })
     });
-    return res.status(200).json({ message: "Success" })
+    return res.status(200).json({ severity: 'success', message: "Success" })
 }

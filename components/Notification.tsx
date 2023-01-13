@@ -1,7 +1,7 @@
 import { Alert, AlertColor, AlertTitle, Typography } from '@mui/material';
 import { Notifications } from '@prisma/client';
 import React from 'react'
-import useSWR from 'swr'
+import { useSnackbar } from './Snackbar';
 
 const alertTitle = {
     "error": 'Vigtigt',
@@ -16,24 +16,28 @@ interface NotificationProp {
     message: string;
     userId: string;
     setNotifications: React.Dispatch<React.SetStateAction<Notifications[]>>;
-    showSnackbar: (msg: string) => void;
 };
 
-const Notification = ({ showSnackbar, setNotifications, id, severity, message }: NotificationProp) => {
+type Data = {
+    message: string;
+    severity: string;
+}
+
+const Notification = ({ setNotifications, id, severity, message }: NotificationProp) => {
+    const { showMessage } = useSnackbar();
     const deleteNotificationFromUser = async () => {
         const data = await fetch(`api/notifications/delete`, {
             method: 'delete',
             body: id
         }).then((response) => response.json())
         if (data || !(data.ok)) {
-            showSnackbar(data.message)
-
+            if (showMessage)
+                showMessage(data.message, data.severity)
         }
 
 
     }
     return (
-
         <Alert onClose={() => { deleteNotificationFromUser() }} severity={severity as AlertColor}>
             <Typography
                 variant="body2"

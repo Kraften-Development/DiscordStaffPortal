@@ -11,6 +11,8 @@ import { ProSidebarProvider, Sidebar, Menu, MenuItem, useProSidebar, SubMenu, Me
 import { DocumentIcon, CheckBadgeIcon, Cog8ToothIcon, HomeIcon, ChevronDoubleRightIcon, XCircleIcon, BoltIcon } from '@heroicons/react/24/solid'
 import { Badge, Typography } from '@mui/material';
 import Link from 'next/link';
+import { SnackbarProvider } from '../components/Snackbar';
+
 
 
 export default function App({
@@ -22,7 +24,9 @@ export default function App({
       <ProSidebarProvider>
         <SidebarDrawer />
         <div className="md:ml-auto md:w-[calc(100%-80px)]">
-          <Component {...pageProps} />
+          <SnackbarProvider>
+            <Component {...pageProps} />
+          </SnackbarProvider>
         </div>
       </ProSidebarProvider>
     </SessionProvider>
