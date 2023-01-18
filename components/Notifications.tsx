@@ -40,9 +40,9 @@ const NotificationList = (props: Props) => {
             </div>
             <Typography variant="subtitle1">Her kan du se alle dine notifikationer</Typography>
             <Paper className="space-y-4" style={{ width: '100%', maxHeight: '800px', overflowY: 'scroll', padding: '20px' }}>
-                {notificationList.map(notification => (
+                {notificationList.length > 0 ? notificationList.map(notification => (
                     <Notification setNotifications={setNotifications} key={notification.id} {...notification} />
-                ))}
+                )) : <p>Der er ingen notifikationer</p>}
             </Paper>
         </div>
     );

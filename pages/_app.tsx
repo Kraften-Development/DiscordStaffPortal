@@ -93,9 +93,8 @@ function SidebarDrawer() {
         </div>
 
         <SubMenu icon={<DocumentIcon className="h-5" />} label="Mine ansøgninger">
-
           <MenuItem> Se mine ansøgninger </MenuItem>
-          <MenuItem> Opret en ansøgning </MenuItem>
+          <MenuItem routerLink={<Link href={'/apply'} />}> Opret en ansøgning </MenuItem>
         </SubMenu>
         <div style={{ padding: '0 24px', marginBottom: '8px', marginTop: '32px' }}>
           <Typography
