@@ -19,6 +19,7 @@ import {
 import { Badge, Typography } from '@mui/material';
 import Link from 'next/link';
 import Navigation from '../components/Navigation';
+import { SnackbarProvider } from '../components/Snackbar';
 
 export default function App({
   Component,
