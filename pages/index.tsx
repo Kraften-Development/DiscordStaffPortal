@@ -14,7 +14,6 @@ interface NotificationProps {
 }
 
 export default function Home({ notifications }: NotificationProps) {
-  console.log(notifications)
   const { data: session } = useSession()
   if (session) {
     return (
