@@ -6,13 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-*::-webkit-scrollbar {
-  display: none;
-}
-
-* {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+body {
+  background-color: rgb(229 231 235);
 }

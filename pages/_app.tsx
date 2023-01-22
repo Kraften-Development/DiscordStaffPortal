@@ -5,19 +5,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import type { AppProps } from 'next/app';
-import { SessionProvider, useSession } from 'next-auth/react';
+import { SessionProvider } from 'next-auth/react';
 
-import {
-  DocumentIcon,
-  CheckBadgeIcon,
-  Cog8ToothIcon,
-  HomeIcon,
-  ChevronDoubleRightIcon,
-  XCircleIcon,
-  BoltIcon,
-} from '@heroicons/react/24/solid';
-import { Badge, Typography } from '@mui/material';
-import Link from 'next/link';
 import Navigation from '../components/Navigation';
 import { SnackbarProvider } from '../components/Snackbar';
 
@@ -28,7 +17,9 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <Navigation />
-      <Component {...pageProps} />
+      <SnackbarProvider>
+        <Component {...pageProps} />
+      </SnackbarProvider>
     </SessionProvider>
   );
 }

@@ -41,6 +41,7 @@ model Notifications {
   userId   String
 }
 
+//The onDelete('cascade') means that when the row is deleted, it will delete all it's references and attached data too.
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -49,16 +50,48 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum ApplicationType {
+  HELPER
+}
+
+model Application {
+  id                 String          @id @default(cuid())
+  name               String
+  username           String
+  age                Int
+  description        String
+  reason             String
+  whychooseyou       String
+  screenshare        String
+  previousexperience String
+  voicechat          String
+  availability       Int
+  commitment         Boolean
+  additionalinfo     String?
+  applicationType    ApplicationType
+  user               User            @relation(fields: [userId], references: [id])
+  userId             String
+}
+
+enum Role {
+  USER
+  HELPER
+  MOD
+  ADMIN
+  GOAT
+}
+
 model User {
   id            String          @id @default(cuid())
   name          String?
-  rank          Int             @default(1)
+  rank          Role            @default(USER)
   email         String?         @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   Notifications Notifications[]
+  Application   Application[]
 }
 
 model VerificationToken {
